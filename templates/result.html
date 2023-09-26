@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Heart Disease Detection | V1.0</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <style>
+        body {
+            background-image: url('static/images/background.png');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: fixed;
+        }
+        
+        .header {
+            position: fixed; /* Ubah posisi menjadi fixed agar tetap terlihat saat discroll */
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: #C70039;
+            padding: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: background-color 0.3s ease; /* Tambahkan transisi untuk efek smooth */
+            z-index: 2; /* Atur z-index lebih tinggi agar tampil di atas konten */
+
+             }
+        .title-container {
+            display: flex;
+            flex-direction: column;
+            align-items: baseline;
+            margin-right: auto;
+        }
+
+        .title {
+            color: #FFF;
+            font-size: 24px;
+            margin-left: 0;
+            margin-bottom: 0;
+            padding-top: 10px;
+        }
+
+        .description {
+            color: #FFF;
+            font-size: 18px;
+            margin-left: 0;
+            margin-block-start: initial;
+
+        }
+
+        .footer {
+            background-color: #F9D949;
+            padding: 20px;
+            position: fixed;
+            bottom: 0; /* Mengatur posisi footer selalu di bagian bawah layar */
+            left: 0;
+            width: 100%; /* Agar footer menutupi seluruh lebar layar */
+            color: #0b0000;
+            text-align: center;
+            font-size: 17px;
+        }
+        .logo {
+            max-width: 100px;
+            height: auto;
+            padding-left: 12px;
+        }
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center; /* Mengatur logo berdampingan secara horizontal */
+            margin-bottom: 20px;
+            flex-wrap: wrap; /* Mengatur agar logo-wrap ke baris baru jika melebihi lebar container */
+        }
+
+        .logo-container img {
+            max-width: 100px; /* Sesuaikan ukuran logo sesuai kebutuhan */
+            height: auto;
+            margin-right: 10px; /* Atur jarak antara logo-logo */
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.852);
+            margin-bottom: 0;
+            bottom: 0; /* Set the bottom to 0 to cover the entire screen */
+            z-index: -1;
+        }
+
+        .container {
+            margin-top: 180px;
+            text-align: center;
+            z-index: 1;
+            position: relative;
+        }
+
+
+        .result {
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: -37px;
+            color: white;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 0 auto;
+            max-width: 400px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease-in-out;
+            position: relative; /* tambahkan properti position: relative */
+        }
+
+        .card:hover {
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .emoji-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 200px; /* Sesuaikan tinggi container sesuai kebutuhan */
+        }
+
+        .emoji {
+            max-width: 250px;
+            height: auto;
+        }
+
+        .button-container {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .button {
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="/static/images/logoIfeel.png" alt="Logo" class="logo">
+        <div class="title-container">
+            <h2 class="title">Vascu Care!</h2>
+            <p class="description">Investasi terbaik untuk hidup panjang</p>
+        </div>
+        <div class="logo-container">
+            <img src="/static/images/Logo_man1.png" alt="Logo 1" class="logo-1">
+            <img src="/static/images/logoOpsi_bulat.png" alt="Logo 2" class="logo-2">
+        </div>
+    </div>
+    <div class="overlay"></div>
+    <div class="container">
+        <h1 class="title" style="margin-bottom: 20px;color: #0b0000;">Hasil Diagnosa Aplikasi</h1>
+        <div class="card">
+            <h2 class="result">Hasil Prediksi Aplikasi:</h2>
+            <p style="font-size: 30px;">{{ result }}</p>
+            <div class="emoji-container">
+                {% if result == "Heart Disease" %}
+                    <img src="/static/images/heart_not.png" alt="Sad Emoji" class="emoji">
+                {% else %}
+                    <img src="/static/images/heart_health.png" alt="Happy Emoji" class="emoji">
+                {% endif %}
+            </div>
+            {% if result == "Heart Disease" %}
+                <p style="font-size: 20px;">Waah, sepertinya anda perlu penanganan medis lebih lanjut.</p>
+            {% else %}
+                <p style="font-size: 20px;">Selamat! Jantung anda terdiagnosa sehat, senang sekali melihat jantung anda sehat.</p>
+            {% endif %}
+        </div>
+        <div class="button-container">
+            <a href="/index" class="btn btn-secondary button">Kembali ke pertanyaan 1</a>
+            <a href="/" class="btn btn-info button">Kembali ke halaman Awal</a>
+        </div>
+    </div>
+    <div class="footer">
+        &copy; 2023 Ifeel - All rights reserved
+    </div>
+</body>
+</html>

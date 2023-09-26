@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Heart Disease Detection | V1.0</title>
+    <style>
+        /* CSS styles */
+
+        /* Common styles for both desktop and mobile */
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('/static/images/background.png');
+            background-size: cover;
+            background-repeat: no-repeat;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            position: fixed; /* Ubah posisi menjadi fixed agar tetap terlihat saat discroll */
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: #C70039;
+            padding: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: background-color 0.3s ease; /* Tambahkan transisi untuk efek smooth */
+            z-index: 2; /* Atur z-index lebih tinggi agar tampil di atas konten */
+
+             }
+        .title-container {
+            display: flex;
+            flex-direction: column;
+            align-items: baseline;
+            margin-right: auto;
+        }
+
+        .title {
+            color: #FFF;
+            font-size: 24px;
+            margin-left: 0;
+            margin-bottom: 0;
+            padding-top: 10px;
+        }
+
+        .description {
+            color: #FFF;
+            font-size: 18px;
+            margin-left: 0;
+            margin-block-start: initial;
+
+        }
+        .footer {
+            background-color: #F9D949;
+            padding: 20px;
+            position: fixed;
+            bottom: 0; /* Mengatur posisi footer selalu di bagian bawah layar */
+            left: 0;
+            width: 100%; /* Agar footer menutupi seluruh lebar layar */
+            color: #0b0000;
+            text-align: center;
+            font-size: 17px;
+        }
+        .logo {
+            max-width: 100px;
+            height: auto;
+            padding-left: 12px;
+        }
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center; /* Mengatur logo berdampingan secara horizontal */
+            margin-bottom: 20px;
+            flex-wrap: wrap; /* Mengatur agar logo-wrap ke baris baru jika melebihi lebar container */
+        }
+
+        .logo-container img {
+            max-width: 100px; /* Sesuaikan ukuran logo sesuai kebutuhan */
+            height: auto;
+            margin-right: 10px; /* Atur jarak antara logo-logo */
+        }
+        .title {
+            color: #FFF;
+            font-size: 24px;
+            margin-left: 10px; /* Posisikan h2 ke kiri dengan margin */
+            flex-grow: 1; /* Mengatur agar h2 menempati ruang yang tersedia */
+        }
+        .container {
+            display: block;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: center;
+            position: relative;
+            z-index: 1;
+            height: 100vh;
+            max-width: 800px;
+            margin: 248px auto;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: left;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .form-label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .form-input {
+            margin-bottom: 15px;
+            padding: 5px;
+            width: 100%;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .form-button {
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .form-button:hover {
+            background-color: #45a049;
+        }
+                /* Untuk browser berbasis WebKit (Chrome, Safari) */
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        /* Untuk Firefox */
+        input[type="number"]::-moz-number-spinners {
+            display: none;
+        }
+
+
+        .back-button {
+            background-color: #5cb0ff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            text-decoration: none;
+            margin-top: 10px;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .back-button:hover {
+            background-color: #3898e7;
+        }
+
+        /* Styles for desktop */
+        @media only screen and (min-width: 768px) {
+            h1 {
+                font-size: 30px;
+                margin-bottom: 5px;
+            }
+            .form-input {
+            margin-bottom: 15px;
+            padding: 5px;
+            width: 100%;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+            .form-label,
+            .form-input {
+                font-size: 40px;
+            }
+
+            .form-button,
+            .back-button {
+                font-size: 25px;
+            }
+
+            .form-container {
+                display: block;
+                grid-template-columns: repeat(2, 1fr);
+                grid-gap: 10px;
+            }
+
+            .p{
+                font-size: medium;
+                margin-bottom: 5px;
+            }
+        }
+
+        /* Styles for mobile */
+        @media only screen and (max-width: 767px) {
+            h1 {
+                font-size: 24px;
+                margin-bottom: 5px;
+            }
+
+            .form-label,
+            .form-input {
+                font-size: 10px;
+            }
+
+            .form-button,
+            .back-button {
+                font-size: 10px;
+            }
+        }
+    </style>
+</head>
+<body style="overflow: hidden;">
+    <div class="header">
+        <img src="/static/images/logoIfeel.png" alt="Logo" class="logo">
+        <div class="title-container">
+            <h2 class="title">Vascu Care!</h2>
+            <p class="description">Investasi terbaik untuk hidup panjang</p>
+        </div>
+        <div class="logo-container">
+            <img src="/static/images/Logo_man1.png" alt="Logo 1" class="logo-1">
+            <img src="/static/images/logoOpsi_bulat.png" alt="Logo 2" class="logo-2">
+        </div>
+    </div>
+    
+    <div class="container">
+        <h1>DIAGNOSA PENYAKIT JANTUNG</h1>
+        <p>Silakan isi informasi berikut untuk mendapatkan hasil diagnosa:</p>
+        <form id="prediction-form" action="/prediction" method="POST">
+            <div class="form-container">
+                <div id="question-1">
+                    <label for="age" class="form-label">Usia:</label>
+                    <p class="warning" style="color: red; display: none;">Harap isi semua input sebelum melanjutkan.</p>
+                    <input type="number" name="age" id="age" class="form-input" required autocomplete="off">
+                    <button type="button" onclick="showQuestion(2)" class="form-button">Next</button>
+                </div>
+
+                <div id="question-2" style="display: none;">
+                    <label for="sex" class="form-label">Jenis Kelamin (0: Perempuan, 1: Laki-Laki):</label>
+                    <p class="warning" style="color: red; display: none;">Harap isi semua input sebelum melanjutkan.</p>
+                    <input type="number" name="sex" id="sex" class="form-input" required autocomplete="off">
+                    <button type="button" onclick="showQuestion(1)" class="form-button previous-button">Previous</button>
+                    <button type="button" onclick="showQuestion(3)" class="form-button">Next</button>
+                </div>
+
+                <div id="question-3" style="display: none;">
+                    <label for="trestbps" class="form-label">Tekanan Darah (mmHg):</label>
+                    <p class="warning" style="color: red; display: none;">Harap isi semua input sebelum melanjutkan.</p>
+                    <input type="number" name="trestbps" id="trestbps" class="form-input" required autocomplete="off">
+                    <button type="button" onclick="showQuestion(2)" class="form-button previous-button">Previous</button>
+                    <button type="button" onclick="showQuestion(4)" class="form-button">Next</button>
+                </div>
+
+                <!-- Pertanyaan 4 -->
+                <div id="question-4" style="display: none;">
+                    <label for="chol" class="form-label">Kadar Kolesterol (mg/dl):</label>
+                    <p class="warning" style="color: red; display: none;">Harap isi semua input sebelum melanjutkan.</p>
+                    <input type="number" name="chol" id="chol" class="form-input" required autocomplete="off">
+                    <button type="button" onclick="showQuestion(3)" class="form-button previous-button">Previous</button>
+                    <button type="button" onclick="showQuestion(5)" class="form-button">Next</button>
+                </div>
+
+                <!-- Pertanyaan 5 -->
+                <div id="question-5" style="display: none;">
+                    <label for="fbs" class="form-label">Apakah Gula Darah Puasa > 120 mg/dl? (0: Tidak, 1: Ya)</label>
+                    <p class="warning" style="color: red; display: none;">Harap isi semua input sebelum melanjutkan.</p>
+                    <input type="number" name="fbs" id="fbs" class="form-input" required autocomplete="off">
+                    <button type="button" onclick="showQuestion(4)" class="form-button previous-button">Previous</button>
+                    <button type="button" onclick="showQuestion(6)" class="form-button">Next</button>
+                </div>
+
+                <!-- Pertanyaan 6 -->
+                <div id="question-6" style="display: none;">
+                    <label for="restecg" class="form-label">Hasil Elektrokardiogram (Nilai 0-2):</label>
+                    <p> ** <br>
+                        0: normal<br>
+                        1: memiliki kelainan gelombang ST-T<br>
+                        2: menunjukkan kemungkinan atau pasti hipertrofi ventrikel kiri oleh Estes
+                    </p>
+                    <p class="warning" style="color: red; display: none;">Harap isi semua input sebelum melanjutkan.</p>
+                    <input type="number" name="restecg" id="restecg" class="form-input" required autocomplete="off">
+                    <button type="button" onclick="showQuestion(5)" class="form-button previous-button">Previous</button>
+                    <button type="button" onclick="showQuestion(7)" class="form-button">Next</button>
+                </div>
+
+                <!-- Pertanyaan 7 -->
+                <div id="question-7" style="display: none;">
+                    <label for="thalach" class="form-label">Detak jantung maksimal (Beats per minute):</label>
+                    <p class="warning" style="color: red; display: none;">Harap isi semua input sebelum melanjutkan.</p>
+                    <input type="number" name="thalach" id="thalach" class="form-input" required autocomplete="off">
+                    <button type="button" onclick="showQuestion(6)" class="form-button previous-button">Previous</button>
+                    <button type="button" onclick="showQuestion(8)" class="form-button">Next</button>
+                </div>
+
+                <!-- Pertanyaan 8 -->
+                <div id="question-8" style="display: none;">
+                    <label for="exang" class="form-label">Apakah anda mengalami nyeri dada saat melakukan aktivitas? (0: Tidak, 1: Ya)</label>
+                    <p class="warning" style="color: red; display: none;">Harap isi semua input sebelum melanjutkan.</p>
+                    <input type="number" name="exang" id="exang" class="form-input" required autocomplete="off">
+                    <button type="button" onclick="showQuestion(7)" class="form-button previous-button">Previous</button>
+                    <button type="button" onclick="showQuestion(9)" class="form-button">Next</button>
+                </div>
+
+                <!-- Pertanyaan 9 -->
+                <div id="question-9" style="display: none;">
+                    <label for="oldpeak" class="form-label">Nilai Depresi ST :</label>
+                    <p class="warning" style="color: red; display: none;">Harap isi semua input sebelum melanjutkan.</p>
+                    <input type="number" step="0.1" name="oldpeak" id="oldpeak" class="form-input" required autocomplete="off">
+                    <button type="button" onclick="showQuestion(8)" class="form-button previous-button">Previous</button>
+                    <button type="button" onclick="showQuestion(10)" class="form-button">Next</button>
+                </div>
+
+                <!-- Pertanyaan 10 -->
+                <div id="question-10" style="display: none;">
+                    <label for="ca" class="form-label">Jumlah pembuluh darah besar (0-3):</label>
+                    <p class="warning" style="color: red; display: none;">Harap isi semua input sebelum melanjutkan.</p>
+                    <input type="number" name="ca" id="ca" class="form-input" required autocomplete="off">
+                    <button type="button" onclick="showQuestion(9)" class="form-button previous-button">Previous</button>
+                    <button type="button" onclick="showQuestion(11)" class="form-button">Next</button>
+                </div>
+
+                <!-- Pertanyaan 11 -->
+                <div id="question-11" style="display: none;">
+                    <label for="cp_0" class="form-label">Apakah anda mengalami nyeri dada typical angina? (0: Tidak, 1: Ya)</label>
+                    <p class="warning" style="color: red; display: none;">Harap isi semua input sebelum melanjutkan.</p>
+                    <input type="number" name="cp_0" id="cp_0" class="form-input" required autocomplete="off">
+                    <button type="button" onclick="showQuestion(10)" class="form-button previous-button">Previous</button>
+                    <button type="button" onclick="showQuestion(12)" class="form-button">Next</button>
+                </div>
+
+                <!-- Pertanyaan 12 -->
+                <div id="question-12" style="display: none;">
+                    <label for="cp_1" class="form-label">Apakah anda mengalami nyeri dada atypical angina? (0: Tidak, 1: Ya)</label>
+                    <p class="warning" style="color: red; display: none;">Harap isi semua input sebelum melanjutkan.</p>
+                    <input type="number" name="cp_1" id="cp_1" class="form-input" required autocomplete="off">
+                    <button type="button" onclick="showQuestion(11)" class="form-button previous-button">Previous</button>
+                    <button type="button" onclick="showQuestion(13)" class="form-button">Next</button>
+                </div>
+
+                <!-- Pertanyaan 13 -->
+                <div id="question-13" style="display: none;">
+                    <label for="cp_2" class="form-label">Apakah anda mengalami nyeri dada non-anginal pain? (0: Tidak, 1: Ya)</label>
+                    <p class="warning" style="color: red; display: none;">Harap isi semua input sebelum melanjutkan.</p>
+                    <input type="number" name="cp_2" id="cp_2" class="form-input" required autocomplete="off">
+                    <button type="button" onclick="showQuestion(12)" class="form-button previous-button">Previous</button>
+                    <button type="button" onclick="showQuestion(14)" class="form-button">Next</button>
+                </div>
+
+                <!-- Pertanyaan 14 -->
+                <div id="question-14" style="display: none;">
+                    <label for="cp_3" class="form-label">Apakah anda mengalami nyeri dada asymptomatic? (0: Tidak, 1: Ya)</label>
+                    <p class="warning" style="color: red; display: none;">Harap isi semua input sebelum melanjutkan.</p>
+                    <input type="number" name="cp_3" id="cp_3" class="form-input" required autocomplete="off">
+                    <button type="button" onclick="showQuestion(13)" class="form-button previous-button">Previous</button>
+                    <button type="button" onclick="showQuestion(15)" class="form-button">Next</button>
+                </div>
+
+                <!-- Pertanyaan 15 -->
+                <div id="question-15" style="display: none;">
+                    <label for="slope_0" class="form-label">Slope : upsloping? (0: Tidak, 1: Ya) </label>
+                    <p>**kemiringan segmen ST latihan puncak</p>
+                    <p class="warning" style="color: red; display: none;">Harap isi semua input sebelum melanjutkan.</p>
+                    <input type="number" name="slope_0" id="slope_0" class="form-input" required autocomplete="off">
+                    <button type="button" onclick="showQuestion(14)" class="form-button previous-button">Previous</button>
+                    <button type="button" onclick="showQuestion(16)" class="form-button">Next</button>
+                </div>
+
+                <!-- Pertanyaan 16 -->
+                <div id="question-16" style="display: none;">
+                    <label for="slope_1" class="form-label">Slope  : flat? (0: Tidak, 1: Ya)</label>
+                    <p class="warning" style="color: red; display: none;">Harap isi semua input sebelum melanjutkan.</p>
+                    <input type="number" name="slope_1" id="slope_1" class="form-input" required autocomplete="off">
+                    <button type="button" onclick="showQuestion(15)" class="form-button previous-button">Previous</button>
+                    <button type="button" onclick="showQuestion(17)" class="form-button">Next</button>
+                </div>
+
+                <!-- Pertanyaan 17 -->
+                <div id="question-17" style="display: none;">
+                    <label for="slope_2" class="form-label">Slope : downsloping? (0: Tidak, 1: Ya)</label>
+                    <p class="warning" style="color: red; display: none;">Harap isi semua input sebelum melanjutkan.</p>
+                    <input type="number" name="slope_2" id="slope_2" class="form-input" required autocomplete="off">
+                    <button type="button" onclick="showQuestion(16)" class="form-button previous-button">Previous</button>
+                    <button type="button" onclick="showQuestion(18)" class="form-button">Next</button>
+                </div>
+
+                <!-- Pertanyaan 18 -->
+                <div id="question-18" style="display: none;">
+                    <label for="thal_0" class="form-label">Thalassemia Normal? (0: Tidak, 1: Ya)</label>
+                    <p class="warning" style="color: red; display: none;">Harap isi semua input sebelum melanjutkan.</p>
+                    <input type="number" name="thal_0" id="thal_0" class="form-input" required autocomplete="off">
+                    <button type="button" onclick="showQuestion(17)" class="form-button previous-button">Previous</button>
+                    <button type="button" onclick="showQuestion(19)" class="form-button">Next</button>
+                </div>
+
+                <!-- Pertanyaan 19 -->
+                <div id="question-19" style="display: none;">
+                    <label for="thal_1" class="form-label">Thalassemia cacat tetap? (0: Tidak, 1: Ya)</label>
+                    <p class="warning" style="color: red; display: none;">Harap isi semua input sebelum melanjutkan.</p>
+                    <input type="number" name="thal_1" id="thal_1" class="form-input" required autocomplete="off">
+                    <button type="button" onclick="showQuestion(18)" class="form-button previous-button">Previous</button>
+                    <button type="button" onclick="showQuestion(20)" class="form-button">Next</button>
+                </div>
+
+                <!-- Pertanyaan 20 -->
+                <div id="question-20" style="display: none;">
+                    <label for="thal_2" class="form-label">Thalassemia cacat reversibel? (0: Tidak, 1: Ya)</label>
+                    <p class="warning" style="color: red; display: none;">Harap isi semua input sebelum melanjutkan.</p>
+                    <input type="number" name="thal_2" id="thal_2" class="form-input" required autocomplete="off">
+                    <button type="button" onclick="showQuestion(19)" class="form-button previous-button">Previous</button>
+                    <button type="submit" class="form-button">Diagnosa</button>
+                </div>
+            </div>
+            <a href="/" class="back-button">Beranda</a>
+        </form>
+    </div>
+    <div class="footer">
+        &copy; 2023 VASCU CARE - All rights reserved
+    </div>
+    <script>
+        // JavaScript function to show/hide questions
+        function showQuestion(questionNumber) {
+            var questions = document.querySelectorAll('.form-container > div');
+            var currentQuestion = questions[questionNumber - 1];
+            var previousQuestion = questions[questionNumber - 2];
+    
+            // Validasi input pada pertanyaan sebelumnya jika ada
+            if (previousQuestion) {
+                var inputs = previousQuestion.querySelectorAll('input[type="number"]');
+                var filled = true;
+    
+                // Memeriksa apakah semua input pada pertanyaan sebelumnya telah diisi
+                inputs.forEach(function (input) {
+                    if (input.value.trim() === '') {
+                        filled = false;
+                    }
+                });
+    
+                // Hanya lanjutkan jika semua input telah diisi
+                if (!filled) {
+                    var warning = previousQuestion.querySelector('.warning');
+                    if (warning) {
+                        warning.style.display = 'block';
+                    }
+                    return;
+                }
+            }
+    
+            // Menyembunyikan pesan peringatan jika ada
+            var currentWarning = currentQuestion.querySelector('.warning');
+            if (currentWarning) {
+                currentWarning.style.display = 'none';
+            }
+    
+            // Menampilkan pertanyaan berikutnya dan menyembunyikan yang sebelumnya
+            questions.forEach(function (question, index) {
+                if (index === questionNumber - 1) {
+                    question.style.display = 'block';
+                } else {
+                    question.style.display = 'none';
+                }
+            });
+        }
+    </script>
+    
+</body>
+</html>
