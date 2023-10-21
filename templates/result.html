@@ -164,13 +164,13 @@
             <h2 class="result">Hasil Prediksi Aplikasi:</h2>
             <p style="font-size: 30px;">{{ result }}</p>
             <div class="emoji-container">
-                {% if result == "Heart Disease" %}
+                {% if result == "Kardiovaskular" %}
                     <img src="/static/images/heart_not.png" alt="Sad Emoji" class="emoji">
                 {% else %}
                     <img src="/static/images/heart_health.png" alt="Happy Emoji" class="emoji">
                 {% endif %}
             </div>
-            {% if result == "Heart Disease" %}
+            {% if result == "Kardiovaskular" %}
                 <p style="font-size: 20px;">Waah, sepertinya anda perlu penanganan medis lebih lanjut.</p>
             {% else %}
                 <p style="font-size: 20px;">Selamat! Jantung anda terdiagnosa sehat, senang sekali melihat jantung anda sehat.</p>
@@ -182,7 +182,7 @@
         </div>
     </div>
     <div class="footer">
-        &copy; 2023 Ifeel - All rights reserved
+        &copy; 2023 VASCU CARE - All rights reserved
     </div>
 </body>
 </html>

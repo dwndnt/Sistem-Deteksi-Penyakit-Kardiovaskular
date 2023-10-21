@@ -232,7 +232,7 @@
     </div>
     
     <div class="container">
-        <h1>DIAGNOSA PENYAKIT JANTUNG</h1>
+        <h1>DIAGNOSA PENYAKIT KARDIOVASKULAR</h1>
         <p>Silakan isi informasi berikut untuk mendapatkan hasil diagnosa:</p>
         <form id="prediction-form" action="/prediction" method="POST">
             <div class="form-container">
@@ -283,7 +283,7 @@
                     <p> ** <br>
                         0: normal<br>
                         1: memiliki kelainan gelombang ST-T<br>
-                        2: menunjukkan kemungkinan atau pasti hipertrofi ventrikel kiri oleh Estes
+                        2: Hypertrofi Ventrikel
                     </p>
                     <p class="warning" style="color: red; display: none;">Harap isi semua input sebelum melanjutkan.</p>
                     <input type="number" name="restecg" id="restecg" class="form-input" required autocomplete="off">
@@ -293,7 +293,7 @@
 
                 <!-- Pertanyaan 7 -->
                 <div id="question-7" style="display: none;">
-                    <label for="thalach" class="form-label">Detak jantung maksimal (Beats per minute):</label>
+                    <label for="thalach" class="form-label">Detak jantung maksimal (detak/menit):</label>
                     <p class="warning" style="color: red; display: none;">Harap isi semua input sebelum melanjutkan.</p>
                     <input type="number" name="thalach" id="thalach" class="form-input" required autocomplete="off">
                     <button type="button" onclick="showQuestion(6)" class="form-button previous-button">Previous</button>
@@ -302,7 +302,7 @@
 
                 <!-- Pertanyaan 8 -->
                 <div id="question-8" style="display: none;">
-                    <label for="exang" class="form-label">Apakah anda mengalami nyeri dada saat melakukan aktivitas? (0: Tidak, 1: Ya)</label>
+                    <label for="exang" class="form-label">Apakah anda mengalami nyeri dada seperti angin duduk (angina induksi)? (0: Tidak, 1: Ya)</label>
                     <p class="warning" style="color: red; display: none;">Harap isi semua input sebelum melanjutkan.</p>
                     <input type="number" name="exang" id="exang" class="form-input" required autocomplete="off">
                     <button type="button" onclick="showQuestion(7)" class="form-button previous-button">Previous</button>

@@ -71,9 +71,9 @@ def predict():
 
     # Menampilkan hasil prediksi
     if prediction[0] == 1:
-        result = 'Heart Disease'
+        result = 'Kardiovaskular'
     else:
-        result = 'Non-Heart Disease'
+        result = 'Non-Kardiovaskular'
 
     return render_template('result.html', result=result)
 
